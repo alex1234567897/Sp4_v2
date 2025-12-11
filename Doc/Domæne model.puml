@@ -1,0 +1,63 @@
+@startuml
+
+object ArcadeSystem
+object Menu
+object Database
+object Server
+object Controls3
+object Controls1
+object Controls2
+object Highscore
+object PersonalRecord
+object Assets
+
+object Games
+
+object Snake
+object Game_2
+
+object SpaceInvaders
+object Ufo
+object Squid
+object Crab
+object Octopus
+
+object Player
+object points
+
+object enemies
+
+
+
+Database -> Highscore
+Highscore -> ArcadeSystem
+
+
+
+Database --> PersonalRecord
+ArcadeSystem <-- Games
+
+Games <-- SpaceInvaders
+Games <-- Snake
+Games <-- Game_2
+
+
+points -> SpaceInvaders
+points -> Snake
+points ->  Game_2
+
+
+enemies <-- Ufo
+enemies <-- Squid
+enemies <-- Octopus
+enemies <-- Crab
+SpaceInvaders <-- enemies
+
+Controls2 --> SpaceInvaders
+Controls3 --> Game_2
+Controls1 --> Snake
+
+
+
+
+@enduml

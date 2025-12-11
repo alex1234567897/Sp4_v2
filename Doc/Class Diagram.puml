@@ -1,0 +1,73 @@
+@startuml
+
+Class Highscore{
+  + saveHighScores()
+}
+
+Class DbHandler{
+
+}
+
+Class Snake{
+- points
+
++ gameSetup()
++ snakeCharacter()
++ controls()
++ apples()
++ lives()
++ getPoints()
++ sounds()
+}
+
+Class SpaceInvaders{
+- points
+
++ controls()
++ enemiesPointCheck()
++ ufo()
++ squid()
++ crab()
++ octopus()
++ lives()
+
++ getPoints()
+}
+interface GameMenu{
+ + resume()
+ + mainMenu()
+ + reset()
+ + exit()
+}
+
+interface MainMenu {
++ chooseGame()
++ settings()
++ exit()
+}
+
+interface settingsMenu {
++ IPAdress()
++ screenSize()
++ audio()
++ return()
+}
+
+class chooseGameMenu {
++ game1()
++ game2()
++ game3()
++ return()
+}
+
+
+MainMenu --> chooseGameMenu
+MainMenu --> settingsMenu
+chooseGameMenu --> SpaceInvaders
+chooseGameMenu --> Snake
+
+GameMenu --> SpaceInvaders
+GameMenu --> Snake
+DbHandler --> Highscore
+
+@enduml
