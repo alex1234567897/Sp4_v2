@@ -45,7 +45,7 @@ public class Snake extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         gameSetup(primaryStage);
-        snakeSetup(gameFrame);
+        //snakeSetup(gameFrame);
         controls();
 
     }
@@ -135,23 +135,23 @@ public class Snake extends Application {
     public void snakeSetup(GraphicsContext primaryStage) {
 
         snake.add(new Corner(20,20));
-        snake.add(new Corner(20,20));
-        snake.add(new Corner(20,20));
+        snake.add(new Corner(40,20));
+        snake.add(new Corner(60,20));
 
         head = snake.getFirst();
         gameFrame.setFill(Color.DARKGREEN);
         gameFrame.fillRect(head.getX() * cellSize, head.getY() * cellSize, cellSize, cellSize);
 
-        gameFrame.setFill(Color.FORESTGREEN);
+       /* gameFrame.setFill(Color.FORESTGREEN);
         for (int i = 1; i<snake.size(); i++) {
             Corner p = snake.get(i);
             gameFrame.fillRect(p.getX() * cellSize, p.getY() * cellSize, cellSize, cellSize);
         }
 
-        root.getChildren().add((Node) snake);
+
 
     }
-
+}
         /*
     public void updateSnake(){
 
