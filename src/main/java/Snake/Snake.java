@@ -96,7 +96,7 @@ public class Snake extends Application {
     }
 
     public void updateSnake(){
-        while(.add)
+
     }
 
     /*public void snakeMovement() {
