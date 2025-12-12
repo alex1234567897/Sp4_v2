@@ -10,7 +10,9 @@ module com.example.icesp4 {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
+    requires java.desktop;
 
     opens com.example.icesp4 to javafx.fxml;
     exports com.example.icesp4;
+    exports Snake;
 }
