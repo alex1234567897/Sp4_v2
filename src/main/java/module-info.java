@@ -13,6 +13,7 @@ module com.example.icesp4 {
     requires javafx.graphics;
     requires jdk.compiler;
     requires javafx.media;
+    requires java.desktop;
 
     opens com.example.icesp4 to javafx.fxml;
     exports com.example.icesp4;
