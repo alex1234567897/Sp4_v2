@@ -95,7 +95,7 @@ public class Snake extends Application {
 
     }
 
-    public void updateSnake(){
+  /*  public void updateSnake(){
 
         AnimationTimer snakeAnimation = new AnimationTimer();
             @Override
@@ -103,7 +103,7 @@ public class Snake extends Application {
 
             }
 
-    }
+    }*/
 
 
     }

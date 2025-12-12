@@ -1,5 +1,14 @@
 
 
+.label .text {
+    -fx-fill: #cf482e;
+    -fx-font-size: 15px;
+}
+
+
+
+
+
 .button {
     -fx-font-family: Press Start 2P;
     -fx-background-color: rgba(26, 60, 80, 0.75);
@@ -14,21 +23,72 @@
     -fx-padding: 4 10 4 10;
 }
 
+.button:hover {
+    -fx-border-color: #855c00;
+    -fx-text-fill: #cf482e;
+    -fx-pref-width: 265px;
+    -fx-cursor: hand;
+}
+
+
+
+
+.button-text{
+    -fx-font-family: Press Start 2P;
+    -fx-background-color: rgba(26, 60, 80, 0.75);
+    -fx-pref-width: 115px;
+    -fx-pref-height: 50px;
+    -fx-text-fill: #cf482e;
+    -fx-font-size: 20px;
+    -fx-border-width: 3px;
+    -fx-border-color: #fbad00;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 4 10 4 10;
+}
+.button-text:hover {
+    -fx-border-color: #855c00;
+    -fx-text-fill: #cf482e;
+    -fx-pref-width: 130px;
+    -fx-cursor: hand;
+}
+
+.button-spaceinvaders{
+    -fx-font-family: Press Start 2P;
+    -fx-background-color: rgba(26, 60, 80, 0.75);
+    -fx-pref-width: 320px;
+    -fx-pref-height: 50px;
+    -fx-text-fill: #cf482e;
+    -fx-font-size: 20px;
+    -fx-border-width: 3px;
+    -fx-border-color: #fbad00;
+    -fx-border-radius: 6px;
+    -fx-background-radius: 6px;
+    -fx-padding: 4 10 4 10;
+}
+.button-spaceinvaders:hover {
+    -fx-border-color: #855c00;
+    -fx-text-fill: #cf482e;
+    -fx-pref-width: 335px;
+    -fx-cursor: hand;
+}
+
+
+
+
+
 .root {
     -fx-font-family: "Press Start 2P";
 }
 
-.bg {
+.menuBG {
     -fx-background-image: url("MenuBackground.png");
     -fx-background-size: cover;
     -fx-background-position: center;
 }
 
-.button:hover {
-    -fx-border-color: #855c00;
-    -fx-text-fill: #cf482e;
-    -fx-pref-width: 265px;
-}
+
+
 
 .choice-box {
     -fx-font-family: Press Start 2P;
@@ -64,20 +124,25 @@
 
 .choice-box .menu-item:hover {
     -fx-background-color: rgba(26, 60, 80, 0.75);
-    -fx-pref-height: 50;
-    -fx-pref-width: 250;
+    -fx-pref-height: 50px;
+    -fx-border-color: #855c00;
+    -fx-text-fill: #cf482e;
+    -fx-pref-width: 265px;
+    -fx-cursor: hand;
 }
 .choice-box .menu-item .label {
     -fx-background-color: rgba(26, 60, 80, 0.75);
     -fx-text-fill: #cf482e;
     -fx-background-radius: 6px;
-    -fx-pref-height: 50;
-    -fx-pref-width: 500;
+    -fx-pref-height: 50px;
+    -fx-pref-width: 500px;
 }
 .choice-box .label{
     -fx-text-fill: #cf482e;
     -fx-font-size: 20px;
 }
+
+
 
 
 .text-field{
@@ -94,15 +159,27 @@
     -fx-padding: 4 10 4 10;
 }
 
-.scroll-bar {
-    -fx-max-width: 250px;
-    -fx-pref-height: 50px;
-    -fx-font-size: 20px;
-    -fx-border-color: #fbad00;
-    -fx-border-width: 3px;
-    -fx-background-radius: 6px;
-    -fx-border-radius: 6px;
-    -fx-background-color: rgba(26, 60, 80, 0.75);
+.text-field:hover {
+    -fx-border-color: #855c00;
     -fx-text-fill: #cf482e;
-    -fx-padding: 4 10 4 10;
+    -fx-pref-width: 265px;
+    -fx-cursor: hand;
+}
+
+
+
+
+.slider {
+    -fx-scale-x: 0.42;
+    -fx-tick-length: 250;
+
+}
+.slider .thumb{
+    -fx-scale-x: 2;
+}
+.slider:hover .thumb{
+    -fx-scale-x: 2.2;
+}
+.slider:hover .Track{
+    -fx-scale-x: 2.2;
 }
