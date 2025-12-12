@@ -146,7 +146,12 @@ public class Snake extends Application {
         for (int i = 1; i<snake.size(); i++) {
             Corner p = snake.get(i);
             gameFrame.fillRect(p.getX() * cellSize, p.getY() * cellSize, cellSize, cellSize);
-        }
+        }*/
+        for (Corner c : snake) {
+            gameFrame.setFill(Color.LIGHTGREEN);
+            gameFrame.fillRect(c.x * cellSize, c.y * cellSize, cellSize - 1, cellSize - 1);
+            gameFrame.setFill(Color.GREEN);
+            gameFrame.fillRect(c.x * cellSize, c.y * cellSize, cellSize - 2, cellSize - 2);
 
 
 
@@ -164,5 +169,6 @@ public class Snake extends Application {
     }
 */
 }
+
 
 
