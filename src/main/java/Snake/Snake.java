@@ -155,82 +155,82 @@ public class Snake extends Application {
             }
         }
 
-            Color foodColor;
-            switch (foodcolor) {
-                case 0:
-                    foodColor = Color.RED;
-                    break;
-                case 1:
-                    foodColor = Color.ORANGE;
-                    break;
-                case 2:
-                    foodColor = Color.YELLOW;
-                    break;
-                case 3:
-                    foodColor = Color.PURPLE;
-                    break;
-                default:
-                    foodColor = Color.PINK;
-            }
-            gameFrame.setFill(foodColor);
-            gameFrame.fillRect(foodX * cellSize, foodY * cellSize, cellSize - 1, cellSize - 1);
+        Color foodColor;
+        switch (foodcolor) {
+            case 0:
+                foodColor = Color.RED;
+                break;
+            case 1:
+                foodColor = Color.ORANGE;
+                break;
+            case 2:
+                foodColor = Color.YELLOW;
+                break;
+            case 3:
+                foodColor = Color.PURPLE;
+                break;
+            default:
+                foodColor = Color.PINK;
+        }
+        gameFrame.setFill(foodColor);
+        gameFrame.fillRect(foodX * cellSize, foodY * cellSize, cellSize - 1, cellSize - 1);
 
-            for (int i = snake.size() - 1; i >= 1; i--) {
-                snake.get(i).x = snake.get(i - 1).x;
-                snake.get(i).y = snake.get(i - 1).y;
-            }
-            switch (direction) {
+        for (int i = snake.size() - 1; i >= 1; i--) {
+            snake.get(i).x = snake.get(i - 1).x;
+            snake.get(i).y = snake.get(i - 1).y;
+        }
+        switch (direction) {
 
-                case UP:
-                    snake.get(0).y--;
-                    if (snake.get(0).y < 0) {
-                        gameOver = true;
-                    }
-                    break;
-                case DOWN:
-                    snake.get(0).y++;
-                    if (snake.get(0).y >= rows) {
-                        gameOver = true;
-                    }
-                    break;
-                case LEFT:
-                    snake.get(0).x--;
-                    if (snake.get(0).x < 0) {
-                        gameOver = true;
-                    }
-                    break;
-                case RIGHT:
-                    snake.get(0).x++;
-                    if (snake.get(0).x >= cols) {
-                        gameOver = true;
-                    }
-                    break;
-
-            }
-
-            for (int i = 1; i < snake.size(); i++) {
-                if (snake.get(0).x == snake.get(i).x && snake.get(0).y == snake.get(i).y) {
+            case UP:
+                snake.get(0).y--;
+                if (snake.get(0).y < 0) {
                     gameOver = true;
-                    break;
                 }
+                break;
+            case DOWN:
+                snake.get(0).y++;
+                if (snake.get(0).y >= rows) {
+                    gameOver = true;
+                }
+                break;
+            case LEFT:
+                snake.get(0).x--;
+                if (snake.get(0).x < 0) {
+                    gameOver = true;
+                }
+                break;
+            case RIGHT:
+                snake.get(0).x++;
+                if (snake.get(0).x >= cols) {
+                    gameOver = true;
+                }
+                break;
+
+        }
+
+        for (int i = 1; i < snake.size(); i++) {
+            if (snake.get(0).x == snake.get(i).x && snake.get(0).y == snake.get(i).y) {
+                gameOver = true;
+                break;
             }
+        }
 
 
-            if (foodX == snake.get(0).x && foodY == snake.get(0).y) {
-                snake.add(new Corner(-1, -1));
-                AudioClip sound = new AudioClip();
-                sound.play();
-                newFood();
-            }
-            Color cc = Color.RED;
-            head = snake.getFirst();
-            gameFrame.setFill(Color.DARKGREEN);
-            gameFrame.fillRect(head.x * cellSize, head.y * cellSize, cellSize - 1, cellSize - 1);
+        if (foodX == snake.get(0).x && foodY == snake.get(0).y) {
+            snake.add(new Corner(-1, -1));
+            //AudioClip sound = new AudioClip();
+           // sound.play();
+            newFood();
+        }
+        Color cc = Color.RED;
+        head = snake.getFirst();
+        gameFrame.setFill(Color.DARKGREEN);
+        gameFrame.fillRect(head.x * cellSize, head.y * cellSize, cellSize - 1, cellSize - 1);
 
-            for (int i = 1; i < snake.size(); i++) {
-                Corner p = snake.get(i);
-                gameFrame.setFill(Color.FORESTGREEN);
-                gameFrame.fillRect(p.x * cellSize, p.y * cellSize, cellSize - 1, cellSize - 1);
+        for (int i = 1; i < snake.size(); i++) {
+            Corner p = snake.get(i);
+            gameFrame.setFill(Color.FORESTGREEN);
+            gameFrame.fillRect(p.x * cellSize, p.y * cellSize, cellSize - 1, cellSize - 1);
 
 
 
@@ -240,29 +240,25 @@ public class Snake extends Application {
             gameFrame.setFill(Color.GREEN);
             gameFrame.fillRect(c.x * cellSize, c.y * cellSize, cellSize - 2, cellSize - 2);
         }*/
-            }
-        }
-
-        public static void newFood () {
-
-            start:
-            while (true) {
-
-                foodX = rand.nextInt(20);
-                foodY = rand.nextInt(20);
-
-                for (Corner c : snake) {
-                    if (c.x == foodX && c.y == foodY) {
-                        continue start;
-                    }
-                }
-                foodcolor = rand.nextInt(5);
-                break;
-
-            }
         }
     }
 
+    public static void newFood () {
 
+        start:
+        while (true) {
 
+            foodX = rand.nextInt(20);
+            foodY = rand.nextInt(20);
 
+            for (Corner c : snake) {
+                if (c.x == foodX && c.y == foodY) {
+                    continue start;
+                }
+            }
+            foodcolor = rand.nextInt(5);
+            break;
+
+        }
+    }
+}
