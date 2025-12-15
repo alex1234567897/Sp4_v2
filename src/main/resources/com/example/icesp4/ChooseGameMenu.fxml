@@ -23,6 +23,6 @@
     </ImageView>
 
     <Button text="SPACE INVADERS" onAction="#SpaceInvaders" onMouseEntered="#playHoverSound" styleClass="button-spaceinvaders"/>
-    <Button text="SNAKE" onAction="#SpaceInvaders" onMouseEntered="#playHoverSound"/>
+    <Button text="SNAKE" onAction="#playSnake" onMouseEntered="#playHoverSound"/>
     <Button text="RETURN" onAction="#returnToMenu" onMouseEntered="#playHoverSound"/>
 </VBox>

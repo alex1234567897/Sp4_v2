@@ -23,6 +23,10 @@ public class MainMenu extends Application {
     private static Scene settingsMenuScene;
     private static Scene chooseGameMenuScene;
     private static Scene chooseGameSubMenuScene;
+    private static Scene highscoreMenuScene;
+
+    private static Scene highscoreSubmitScene;
+    private static FXMLLoader highscoreSubmitLoader;
 
     public int size = 3;
     public final int width = 224 * size;
@@ -32,6 +36,9 @@ public class MainMenu extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
+
+
 
         primaryStage = stage;
 
@@ -43,10 +50,12 @@ public class MainMenu extends Application {
         FXMLLoader settingsLoader = new FXMLLoader(getClass().getResource("SettingsMenu.fxml"));
         FXMLLoader chooseGameMenuLoader = new FXMLLoader(getClass().getResource("ChooseGameMenu.fxml"));
         FXMLLoader chooseGameSubMenuLoader = new FXMLLoader(getClass().getResource("ChooseGameSubMenu.fxml"));
+        FXMLLoader highscoreMenuLoader = new FXMLLoader(getClass().getResource("HighscoreMenu.fxml"));
 
         Parent settingsMenuRoot = settingsLoader.load();
         Parent chooseGameMenuRoot = chooseGameMenuLoader.load();
         Parent chooseGameSubMenuRoot = chooseGameSubMenuLoader.load();
+        Parent highscoreMenuRoot = highscoreMenuLoader.load();
 
         SettingsMenuController settingsController = settingsLoader.getController();
         settingsController.setHighscoreManager(services.highscores);
@@ -58,6 +67,7 @@ public class MainMenu extends Application {
         settingsMenuScene = new Scene(settingsMenuRoot);
         chooseGameMenuScene = new Scene(chooseGameMenuRoot);
         chooseGameSubMenuScene = new Scene(chooseGameSubMenuRoot);
+        highscoreMenuScene = new Scene(highscoreMenuRoot);
 
 
         Image image = new Image(getClass().getResource("Logo.png").toExternalForm());
@@ -69,6 +79,7 @@ public class MainMenu extends Application {
         settingsMenuScene.getStylesheets().add(MainMenu.class.getResource("Style.css").toExternalForm());
         chooseGameMenuScene.getStylesheets().add(MainMenu.class.getResource("Style.css").toExternalForm());
         chooseGameSubMenuScene.getStylesheets().add(MainMenu.class.getResource("Style.css").toExternalForm());
+        highscoreMenuScene.getStylesheets().add(MainMenu.class.getResource("Style.css").toExternalForm());
         stage.setTitle("ARCADE MACHINE");
         stage.getIcons().add(image);
         stage.setScene(mainMenuScene);
@@ -94,9 +105,41 @@ public class MainMenu extends Application {
     public static void showChooseGameSubMenu(){
         primaryStage.setScene(chooseGameSubMenuScene);
     }
+    public static void showHighscoreMenu(){
+        primaryStage.setScene(highscoreMenuScene);
+    }
 
     public static Services getServices() {
         return services;
     }
 
+    public static void showHighscoreSubmit(String gameId, int finalScore) {
+        try {
+            HighscoreSubmitMenuController c = highscoreSubmitLoader.getController();
+            c.init(services.highscores, gameId, finalScore);
+            primaryStage.setScene(highscoreSubmitScene);
+        } catch (Exception e) {
+            e.printStackTrace();
+            showMainMenu();
+        }
+    }
+
+    public static void showSpaceInvaders() {
+        final int W = 224;
+        final int H = 256;
+        final int SCALE = 3;
+
+        var game = new SpaceInvaders.GameLoop(W, H, SCALE, finalScore -> {
+            showHighscoreSubmit(com.example.icesp4.core.GameId.SPACE_INVADERS, finalScore);
+        });
+
+        Scene gameScene = new Scene(game.getRoot(), W * SCALE, H * SCALE);
+
+        primaryStage.setScene(gameScene);
+        primaryStage.setResizable(false);
+        primaryStage.sizeToScene();
+        game.attachInput(gameScene);
+        game.requestFocus();
+        game.start();
+    }
 }

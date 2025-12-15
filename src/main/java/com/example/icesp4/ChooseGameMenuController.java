@@ -15,6 +15,10 @@ public class ChooseGameMenuController {
         MainMenu.showChooseGameSubMenu();
 
     }
+    @FXML
+    protected void playSnake(){
+        MainMenu.showHighscoreMenu();
+    }
 
     //sound effects
     private final AudioClip hoverSound = new AudioClip(getClass().getResource("Music/SoundEffects/appear-online.mp3").toExternalForm());

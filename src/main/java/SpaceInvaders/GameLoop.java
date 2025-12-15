@@ -35,6 +35,10 @@ public class GameLoop {
 
     private int score = 0;
 
+    public int getScore() {
+        return score;
+    }
+
     private final WritableImage framebuffer;
     private final PixelWriter pixelW;
     private final ImageView view;

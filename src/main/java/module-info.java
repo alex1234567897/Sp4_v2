@@ -26,4 +26,5 @@ module com.example.icesp4 {
 
     exports SpaceInvaders;
     opens SpaceInvaders to javafx.fxml, javafx.graphics;
+
 }

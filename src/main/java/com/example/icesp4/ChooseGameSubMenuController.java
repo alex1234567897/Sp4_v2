@@ -35,7 +35,7 @@ public class ChooseGameSubMenuController {
 
     @FXML
     protected void playGame() {
-        SpaceInvadersLauncher.openInNewWindow();
+        MainMenu.showSpaceInvaders();
     }
 
     public void setHighscoreManager(HighscoreManager highscores) {

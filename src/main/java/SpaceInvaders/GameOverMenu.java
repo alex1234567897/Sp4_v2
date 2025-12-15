@@ -1,5 +1,6 @@
 package SpaceInvaders;
 
+import com.example.icesp4.MainMenu;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.input.KeyCode;
 
@@ -57,6 +58,7 @@ public class GameOverMenu implements Menu {
             }
             if (keys.contains(KeyCode.ESCAPE)) {
                 finishedExit = true;
+                MainMenu.showHighscoreMenu();
             }
         }
     }
