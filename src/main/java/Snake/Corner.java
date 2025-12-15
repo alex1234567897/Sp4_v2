@@ -2,8 +2,8 @@ package Snake;
 
 public class Corner {
 
-    static int x;
-    static int y;
+    int x;
+    int y;
     public Corner(int x, int y){
         this.x = x;
         this.y = y;

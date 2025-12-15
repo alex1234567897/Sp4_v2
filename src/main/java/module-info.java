@@ -14,6 +14,8 @@ module com.example.icesp4 {
     requires jdk.compiler;
     requires javafx.media;
     requires java.desktop;
+    //requires com.example.icesp4;
+    //requires com.example.icesp4;
 
     opens com.example.icesp4 to javafx.fxml;
     exports com.example.icesp4;
