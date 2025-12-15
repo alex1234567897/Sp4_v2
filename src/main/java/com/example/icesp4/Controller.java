@@ -8,7 +8,7 @@ import javafx.scene.media.MediaPlayer;
 
 public class Controller {
 
-    @FXML
+    @FXML 
     protected void SettingsMenu() {
         MainMenu.showSettingsMenu();
     }
