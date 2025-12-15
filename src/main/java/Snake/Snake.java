@@ -15,13 +15,16 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import java.util.Random;
+
+import javax.sound.sampled.*;
+import java.io.File;
+
+
+import java.util.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Stack;
 
 
 public class Snake extends Application {
@@ -40,6 +43,7 @@ public class Snake extends Application {
     Corner head;
     boolean gameOver = false;
     private double speed = 6.5;
+    private int points = 0;
 
     private int cols;
     private int rows;
@@ -50,7 +54,6 @@ public class Snake extends Application {
     Canvas canvas = new Canvas(width, height);
     Scene scene = new Scene(root, width, 640);
 
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -59,10 +62,8 @@ public class Snake extends Application {
     public void start(Stage primaryStage) throws Exception {
 
         gameSetup();
-        newFood();
-        animationTimer();
-        snakeSetup();
 
+        pressToStart();
 
         primaryStage.setTitle("Snake");
         primaryStage.setScene(scene);
@@ -70,7 +71,7 @@ public class Snake extends Application {
 
     }
 
-    public void gameSetup(){
+    public void gameSetup() {
 
         game.setPrefSize(width, height);
         game.setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
@@ -94,6 +95,22 @@ public class Snake extends Application {
             }
         }
     }
+
+    public void pressToStart() {
+        gameFrame.setFill(Color.FORESTGREEN);
+        gameFrame.setFont(new Font("", 50));
+        gameFrame.fillText("Press any key to start", 70, 300);
+
+        scene.setOnKeyPressed(event -> {
+           // if (event.getCode() == KeyCode.SPACE)
+                newFood();
+                animationTimer();
+                snakeSetup();
+
+
+        });
+    }
+
     public void animationTimer() {
         new AnimationTimer() {
             long lastTick = 0;
@@ -114,6 +131,7 @@ public class Snake extends Application {
         }.start();
 
     }
+
     public void snakeSetup() {
         scene.setFill(Color.DARKGRAY);
         scene.setOnKeyPressed(event -> {
@@ -127,16 +145,21 @@ public class Snake extends Application {
                 nextDirection = Dir.RIGHT;
         });
 
-        snake.add(new Corner(5, 5));
-        snake.add(new Corner(5, 5));
-        snake.add(new Corner(5, 5));
+        snake.add(new Corner(20, 5));
+        snake.add(new Corner(20, 5));
+        snake.add(new Corner(20, 5));
 
     }
+
     public void updateSnake(GraphicsContext gameFrame) {
         if (gameOver) {
             gameFrame.setFill(Color.RED);
             gameFrame.setFont(new Font("", 50));
             gameFrame.fillText("GAME OVER", 150, 300);
+            points = snake.size() - 3;
+            gameFrame.fillText("Points: " +
+                    points, 175, 500);
+
             return;
         }
 
@@ -218,8 +241,6 @@ public class Snake extends Application {
 
         if (foodX == snake.get(0).x && foodY == snake.get(0).y) {
             snake.add(new Corner(-1, -1));
-            //AudioClip sound = new AudioClip();
-           // sound.play();
             newFood();
         }
         Color cc = Color.RED;
@@ -232,18 +253,10 @@ public class Snake extends Application {
             gameFrame.setFill(Color.FORESTGREEN);
             gameFrame.fillRect(p.x * cellSize, p.y * cellSize, cellSize - 1, cellSize - 1);
 
-
-
-      /*for (Corner c : snake) {
-            gameFrame.setFill(Color.LIGHTGREEN);
-            gameFrame.fillRect(c.x * cellSize, c.y * cellSize, cellSize - 1, cellSize - 1);
-            gameFrame.setFill(Color.GREEN);
-            gameFrame.fillRect(c.x * cellSize, c.y * cellSize, cellSize - 2, cellSize - 2);
-        }*/
         }
     }
 
-    public static void newFood () {
+    public static void newFood() {
 
         start:
         while (true) {
@@ -260,5 +273,9 @@ public class Snake extends Application {
             break;
 
         }
+    }
+
+    public int getPoints() {
+        return points;
     }
 }
