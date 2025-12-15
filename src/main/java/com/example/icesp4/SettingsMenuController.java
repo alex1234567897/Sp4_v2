@@ -71,7 +71,7 @@ public class SettingsMenuController implements Initializable {
 
         task.setOnScheduled(e -> connectionStatusLabel.setText("OK" + task.getValue()));
         task.setOnFailed(e -> { Throwable ex = task.getException();
-            connectionStatusLabel.setText("ERROR! " + (ex != null ? ex.getMessage() : "Unknown ERROR..."));
+            connectionStatusLabel.setText("EROOR!" + (ex != null ? ex.getMessage() : "Unknown ERROR..."));
         });
 
         Thread t = new Thread(task, "server-test");

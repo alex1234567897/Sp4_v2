@@ -15,6 +15,9 @@ module com.example.icesp4 {
     requires javafx.media;
     requires java.desktop;
 
+    requires java.sql;
+    requires com.google.gson;
+
     opens com.example.icesp4 to javafx.fxml;
     exports com.example.icesp4;
 }

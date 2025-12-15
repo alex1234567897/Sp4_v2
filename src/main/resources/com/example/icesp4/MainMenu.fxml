@@ -8,7 +8,7 @@
 <?import javafx.scene.image.Image?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.example.icesp4.Controller"
-      styleClass="bg">
+      styleClass="menuBG">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="0.0"/>
     </padding>
@@ -23,7 +23,7 @@
     </ImageView>
 
 
-    <Button text="CHOOSE GAME" onAction="#ChooseGame"/>
-    <Button text="SETTINGS" onAction="#SettingsMenu"/>
-    <Button text="EXIT" onAction="#onExitButtonClick"/>
+    <Button text="CHOOSE GAME" onAction="#ChooseGame" onMouseEntered="#playHoverSound"/>
+    <Button text="SETTINGS" onAction="#SettingsMenu" onMouseEntered="#playHoverSound"/>
+    <Button text="EXIT" onAction="#onExitButtonClick" onMouseEntered="#playHoverSound"/>
 </VBox>

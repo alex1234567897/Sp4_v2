@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
+
+<?import javafx.scene.image.Image?>
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.example.icesp4.ChooseGameMenuController"
+      styleClass="menuBG">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="0.0"/>
+    </padding>
+
+    <?import javafx.scene.image.ImageView?>
+    <?import javafx.scene.image.Image?>
+
+    <ImageView fitWidth="400" preserveRatio="true">
+        <image>
+            <Image url="@ChooseGame.png" />
+        </image>
+    </ImageView>
+
+    <Button text="SPACE INVADERS" onAction="#placeHolder" onMouseEntered="#playHoverSound" styleClass="button-spaceinvaders"/>
+    <Button text="SNAKE" onAction="#placeHolder" onMouseEntered="#playHoverSound"/>
+    <Button text="RETURN" onAction="#returnToMenu" onMouseEntered="#playHoverSound"/>
+</VBox>
