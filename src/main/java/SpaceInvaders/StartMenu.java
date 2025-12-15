@@ -7,6 +7,8 @@ import java.util.Set;
 
 public class StartMenu implements Menu {
 
+    private static final int MENU_OFFSET_X = 0;
+
     private final PixelWriter pw;
     private final Renderer renderer;
     private final BitmapFont font;
@@ -64,7 +66,9 @@ public class StartMenu implements Menu {
         drawRowColored(Assets.OCTOPUS, "10 POINTS", baseY + 48, renderer.palette().greenInk(Colors.ON));
 
         int creditY = h - 10 - 7;
-        font.draw(pw, "CREDIT  00", w - textW("CREDIT  00") - 16, creditY, ink(creditY), w, h);
+        String credit = "CREDIT  00";
+        int creditX = w - textW(credit) - 16 + MENU_OFFSET_X;
+        font.draw(pw, credit, creditX, creditY, ink(creditY), w, h);
     }
 
     @Override
@@ -73,7 +77,7 @@ public class StartMenu implements Menu {
     }
 
     private void drawRow(Sprite s, String text, int y) {
-        int sx = 78;
+        int sx = 78 + MENU_OFFSET_X;
         int eqX = sx + s.getWidth() + 2;
         int ty = y + 2;
 
@@ -83,7 +87,7 @@ public class StartMenu implements Menu {
     }
 
     private void drawRowColored(Sprite s, String text, int y, int color) {
-        int sx = 78;
+        int sx = 78 + MENU_OFFSET_X;
         int eqX = sx + s.getWidth() + 2;
         int ty = y + 2;
 
@@ -105,10 +109,10 @@ public class StartMenu implements Menu {
     }
 
     private int textW(String s) {
-        return s.length() * 6;
+        return font.measureWidth(s);
     }
 
     private int centerX(String s) {
-        return (w - textW(s)) / 2;
+        return (w - textW(s)) / 2 + MENU_OFFSET_X;
     }
 }

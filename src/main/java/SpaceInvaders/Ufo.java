@@ -38,6 +38,7 @@ public class Ufo {
             hitTimer -= dt;
             if (hitTimer <= 0) {
                 hit = false;
+                SoundManager.play(SoundManager.PLAYER_DIE);
                 scheduleNextSpawn(rng);
             }
             return;

@@ -14,12 +14,15 @@ module com.example.icesp4 {
     requires jdk.compiler;
     requires javafx.media;
     requires java.desktop;
+    requires java.prefs;
 
     requires java.sql;
     requires com.google.gson;
 
     opens com.example.icesp4 to javafx.fxml;
+    opens com.example.icesp4.db to com.google.gson;
     exports com.example.icesp4;
+    exports com.example.icesp4.db;
 
     exports SpaceInvaders;
     opens SpaceInvaders to javafx.fxml, javafx.graphics;

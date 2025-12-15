@@ -11,7 +11,8 @@ public class ChooseGameMenuController {
     }
 
     @FXML
-    protected void placeHolder(){
+    protected void SpaceInvaders(){
+        MainMenu.showChooseGameSubMenu();
 
     }
 

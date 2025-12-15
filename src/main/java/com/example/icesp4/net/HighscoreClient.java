@@ -19,22 +19,62 @@ public class HighscoreClient {
     private final Gson gson = new Gson();
 
     public HighscoreClient(String baseUrl) {
-        this.baseUrl = baseUrl;
+        this.baseUrl = normalizeBaseUrl(baseUrl);
     }
 
     public void setBaseUrl(String baseUrl) {
-        this.baseUrl = baseUrl;
+        this.baseUrl = normalizeBaseUrl(baseUrl);
+        System.out.println("Client baseUrl set to: " + this.baseUrl);
+    }
+
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    private String normalizeBaseUrl(String input) {
+        String s = input == null ? "" : input.trim();
+
+        if (s.isBlank()) return "http://localhost:8080";
+
+        while (s.endsWith("/")) s = s.substring(0, s.length() - 1);
+
+        if (s.startsWith("http://") || s.startsWith("https://")) return s;
+
+        if (s.matches("^[^:/]+:\\d+$")) return "http://" + s;
+
+        return "http://" + s + ":8080";
+    }
+
+    private HttpURLConnection openGet(String endpoint) throws Exception {
+        System.out.println("REQUEST URL = " + endpoint);
+
+        HttpURLConnection conn = (HttpURLConnection) new URL(endpoint).openConnection();
+        conn.setRequestMethod("GET");
+        conn.setConnectTimeout(3000);
+        conn.setReadTimeout(3000);
+        return conn;
+    }
+
+    private HttpURLConnection openPost(String endpoint) throws Exception {
+        System.out.println("REQUEST URL = " + endpoint);
+
+        HttpURLConnection conn = (HttpURLConnection) new URL(endpoint).openConnection();
+        conn.setRequestMethod("POST");
+        conn.setDoOutput(true);
+        conn.setConnectTimeout(3000);
+        conn.setReadTimeout(3000);
+        conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+        return conn;
     }
 
     public String testConnection() throws Exception {
-        URL url = new URL(baseUrl + "/test");
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
+        String endpoint = baseUrl + "/test";
+        HttpURLConnection conn = openGet(endpoint);
 
         try (InputStream is = conn.getInputStream()) {
-            String result = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+            return new String(is.readAllBytes(), StandardCharsets.UTF_8);
+        } finally {
             conn.disconnect();
-            return result;
         }
     }
 
@@ -42,27 +82,27 @@ public class HighscoreClient {
         String endpoint = baseUrl + "/highscores?game=" +
                 URLEncoder.encode(game, StandardCharsets.UTF_8) +
                 "&limit=" + limit;
+        System.out.println("baseUrl in client = " + baseUrl);
+        System.out.println("REQUEST URL = " + endpoint);
 
-        URL url = new URL(endpoint);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        HttpURLConnection conn = (HttpURLConnection) new URL(endpoint).openConnection();
         conn.setRequestMethod("GET");
+        conn.setConnectTimeout(3000);
+        conn.setReadTimeout(3000);
 
         try (InputStream is = conn.getInputStream()) {
             String json = new String(is.readAllBytes(), StandardCharsets.UTF_8);
-            conn.disconnect();
-
             Type listType = new TypeToken<List<GlobalScore>>() {}.getType();
             return gson.fromJson(json, listType);
+        } finally {
+            conn.disconnect();
         }
     }
 
     public boolean submitScore(String game, String name, int score) {
         try {
-            URL url = new URL(baseUrl + "/submit");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setDoOutput(true);
-            conn.setRequestProperty("Content-Type", "application/json; charset=utf-8");
+            String endpoint = baseUrl + "/submit";
+            HttpURLConnection conn = openPost(endpoint);
 
             SubmitRequest req = new SubmitRequest(game, name.toUpperCase(), score);
             String json = gson.toJson(req);
