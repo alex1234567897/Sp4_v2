@@ -20,7 +20,7 @@ public class Audio {
         }
     }
 
-    private static double volume = 1;
+    private static double volume = 0.5;
 
     public static void playBackgroundMusic() {
         if (bgPlayer != null) {
