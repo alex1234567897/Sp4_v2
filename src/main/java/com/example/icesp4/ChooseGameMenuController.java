@@ -11,8 +11,13 @@ public class ChooseGameMenuController {
     }
 
     @FXML
-    protected void placeHolder(){
+    protected void SpaceInvaders(){
+        MainMenu.showChooseGameSubMenu();
 
+    }
+    @FXML
+    protected void playSnake(){
+        MainMenu.showHighscoreMenu();
     }
 
     //sound effects

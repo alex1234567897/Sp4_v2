@@ -1,0 +1,125 @@
+@startuml
+
+Class Highscore{
+  + saveHighScores()
+}
+
+Class DbHandler{
+
+}
+
+Class Snake{
+- points
+
++ gameSetup()
++ snakeCharacter()
++ controls()
++ apples()
++ lives()
++ getPoints()
++ sounds()
+}
+
+Class SpaceInvaders{
+- points
+
++ controls()
++ enemiesPointCheck()
++ ufo()
++ squid()
++ crab()
++ octopus()
++ lives()
+
++ getPoints()
+}
+interface GameMenu{
+ + resume()
+ + mainMenu()
+ + reset()
+ + exit()
+}
+
+interface MainMenu {
++ chooseGame()
++ settings()
++ exit()
+}
+
+interface settingsMenu {
++ IPAdress()
++ screenSize()
++ audio()
++ return()
+}
+
+class chooseGameMenu {
++ game1()
++ game2()
++ game3()
++ return()
+}
+
+
+MainMenu --> chooseGameMenu
+MainMenu --> settingsMenu
+chooseGameMenu --> SpaceInvaders
+chooseGameMenu --> Snake
+
+GameMenu --> SpaceInvaders
+GameMenu --> Snake
+DbHandler --> Highscore
+
+package core {
+    class AppState
+    class GameId
+    class HighscoreManager
+    class Services
+}
+
+package db {
+    class GlobalScore
+    class LocalDatabase
+    class LocalScore
+}
+
+package net {
+    class Audio
+    class ChooseGameMenuController
+    class ChooseGameSubMenuController
+    class Controller
+    class Launcher
+    class MainMenu
+    class SettingsMenuController
+    class SettingsStore
+}
+
+package Snake {
+    ' Ingen klasser vist i screenshot, men placeholder hvis nødvendigt
+}
+
+package SpaceInvaders {
+    class Animation
+    class Assets
+    class Barrier
+    class BitmapFont
+    class Bullet
+    class Colors
+    class GameLoop
+    enum GameState
+    class GroundLine
+    class Invader
+    class InvaderFormation
+    enum InvaderShotType
+    enum InvaderType
+    class Layout
+    class Menu
+    class Palette
+    class Player
+    class Renderer
+    class SpaceMain
+    class Sprite
+}
+
+
+@enduml

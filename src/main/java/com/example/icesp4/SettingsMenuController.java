@@ -60,6 +60,9 @@ public class SettingsMenuController implements Initializable {
         String baseUrl = normalizeBaseUrl(input);
 
         highscores.setServerBaseUrl(baseUrl);
+
+        SettingsStore.saveServerBaseUrl(baseUrl);
+
         connectionStatusLabel.setText("Testing...");
 
         Task<String> task = new Task<>() {
@@ -69,9 +72,15 @@ public class SettingsMenuController implements Initializable {
             }
         };
 
-        task.setOnScheduled(e -> connectionStatusLabel.setText("OK" + task.getValue()));
-        task.setOnFailed(e -> { Throwable ex = task.getException();
-            connectionStatusLabel.setText("EROOR!" + (ex != null ? ex.getMessage() : "Unknown ERROR..."));
+        task.setOnSucceeded(e -> {
+            String msg = task.getValue();
+            if (msg == null || msg.isBlank()) msg = "Connection OK";
+            connectionStatusLabel.setText("OK ✅ " + msg);
+        });
+
+        task.setOnFailed(e -> {
+            Throwable ex = task.getException();
+            connectionStatusLabel.setText("ERROR " + (ex != null ? ex.getMessage() : "Unknown error"));
         });
 
         Thread t = new Thread(task, "server-test");
@@ -79,18 +88,27 @@ public class SettingsMenuController implements Initializable {
         t.start();
     }
 
+
     private String normalizeBaseUrl(String input) {
+        String url = input.trim();
 
-        if (input.isBlank()) {
-            return "http://localhost:8080";
+        if (url.isBlank()) url = "http://localhost:8080";
+
+        if (!(url.startsWith("http://") || url.startsWith("https://"))) {
+            url = "http://" + url;
+
+            if (!url.contains(":")) {
+                url += ":8080";
+            } else if (!url.matches(".*:\\d+.*")) {
+                url += ":8080";
+            }
         }
 
-        if (input.startsWith("http://") || input.startsWith("https://")) {
-            return input;
+        while (url.endsWith("/")) {
+            url = url.substring(0, url.length() - 1);
         }
 
-        return "http://" + input + ":8080";
-
+        return url;
     }
 
     @FXML
@@ -126,7 +144,7 @@ public class SettingsMenuController implements Initializable {
         volumeSlider.setValue(Audio.getVolume());
 
         volumeSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
-            Audio.setVolume(newVal.doubleValue());   // Updates global volume + MediaPlayer
+            Audio.setVolume(newVal.doubleValue());
         });
 
     }

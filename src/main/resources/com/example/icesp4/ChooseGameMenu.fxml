@@ -22,7 +22,7 @@
         </image>
     </ImageView>
 
-    <Button text="SPACE INVADERS" onAction="#placeHolder" onMouseEntered="#playHoverSound" styleClass="button-spaceinvaders"/>
-    <Button text="SNAKE" onAction="#placeHolder" onMouseEntered="#playHoverSound"/>
+    <Button text="SPACE INVADERS" onAction="#SpaceInvaders" onMouseEntered="#playHoverSound" styleClass="button-spaceinvaders"/>
+    <Button text="SNAKE" onAction="#playSnake" onMouseEntered="#playHoverSound"/>
     <Button text="RETURN" onAction="#returnToMenu" onMouseEntered="#playHoverSound"/>
 </VBox>
