@@ -1,7 +1,7 @@
 package com.example.icesp4;
 
 
-import Snake.SnakeGame;
+
 import com.example.icesp4.core.Services;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -52,7 +52,7 @@ public class MainMenu extends Application {
         Parent settingsMenuRoot = settingsLoader.load();
         Parent chooseGameMenuRoot = chooseGameMenuLoader.load();
         Parent chooseGameSubMenuRoot = chooseGameSubMenuLoader.load();
-        Parent highscoreMenuRoot = highscoreMenuLoader.load();
+
 
         SettingsMenuController settingsController = settingsLoader.getController();
         settingsController.setHighscoreManager(services.highscores);
@@ -64,7 +64,7 @@ public class MainMenu extends Application {
         settingsMenuScene = new Scene(settingsMenuRoot);
         chooseGameMenuScene = new Scene(chooseGameMenuRoot);
         chooseGameSubMenuScene = new Scene(chooseGameSubMenuRoot);
-        highscoreMenuScene = new Scene(highscoreMenuRoot);
+
 
 
         Image image = new Image(getClass().getResource("Logo.png").toExternalForm());
@@ -76,7 +76,6 @@ public class MainMenu extends Application {
         settingsMenuScene.getStylesheets().add(MainMenu.class.getResource("Style.css").toExternalForm());
         chooseGameMenuScene.getStylesheets().add(MainMenu.class.getResource("Style.css").toExternalForm());
         chooseGameSubMenuScene.getStylesheets().add(MainMenu.class.getResource("Style.css").toExternalForm());
-        highscoreMenuScene.getStylesheets().add(MainMenu.class.getResource("Style.css").toExternalForm());
         stage.setTitle("ARCADE MACHINE");
         stage.getIcons().add(image);
         stage.setScene(mainMenuScene);
@@ -148,16 +147,28 @@ public class MainMenu extends Application {
         game.requestFocus();
         game.start();
     }
-    public static void showSnake() {
-        SnakeGame game = new SnakeGame(600, 600);
-        Scene scene = new Scene(game.getRoot());
 
-        primaryStage.setScene(scene);
+    /* ---- brugte chatgpt til at skrive en kode til vi kunne kalde og køre Snake i vores Menu ----
+
+    public static void showSnake() {
+        final int width = 600;
+        final int height = 600;
+        SnakeGame game = new SnakeGame(width, height);
+
+        game.setListener(finalScore -> {
+            showHighscoreSubmit(com.example.icesp4.core.GameId.SNAKE, finalScore);
+        });
+
+        Scene gameScene = new Scene(game, width, height);
+
+        game.attachInput(gameScene);
+
+        primaryStage.setScene(gameScene);
         primaryStage.setResizable(false);
         primaryStage.show();
 
-        game.attachInput(scene);
-    }
+        game.startGame();
+    }*/
 
 
 }

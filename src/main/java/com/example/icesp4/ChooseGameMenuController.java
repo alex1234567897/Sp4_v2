@@ -19,7 +19,8 @@ public class ChooseGameMenuController {
     }
     @FXML
     protected void playSnake(){
-        MainMenu.showSnake();
+       // MainMenu.showSnake();
+        System.out.println("WIP");
 
     }
 
