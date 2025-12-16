@@ -24,8 +24,6 @@ public class MainMenu extends Application {
     private static Scene chooseGameSubMenuScene;
     private static Scene highscoreMenuScene;
 
-    private static Scene highscoreSubmitScene;
-    private static FXMLLoader highscoreSubmitLoader;
 
     public int size = 3;
     public final int width = 224 * size;
@@ -82,7 +80,7 @@ public class MainMenu extends Application {
         stage.setTitle("ARCADE MACHINE");
         stage.getIcons().add(image);
         stage.setScene(mainMenuScene);
-        stage.setResizable(true);
+        stage.setResizable(false);
         stage.setWidth(width);
         stage.setHeight(height);
         stage.show();
@@ -112,8 +110,17 @@ public class MainMenu extends Application {
         return services;
     }
 
+    private static FXMLLoader highscoreSubmitLoader;
+    private static Scene highscoreSubmitScene;
+
     public static void showHighscoreSubmit(String gameId, int finalScore) {
         try {
+            if (highscoreSubmitLoader == null) {
+                highscoreSubmitLoader = new FXMLLoader(MainMenu.class.getResource("HighscoreSubmitMenu.fxml"));
+                Parent root = highscoreSubmitLoader.load();
+                highscoreSubmitScene = new Scene(root);
+            }
+
             HighscoreSubmitMenuController c = highscoreSubmitLoader.getController();
             c.init(services.highscores, gameId, finalScore);
             primaryStage.setScene(highscoreSubmitScene);
@@ -146,10 +153,9 @@ public class MainMenu extends Application {
         Scene scene = new Scene(game.getRoot());
 
         primaryStage.setScene(scene);
-        primaryStage.setResizable(true);
+        primaryStage.setResizable(false);
         primaryStage.show();
 
-// bind input og start spillet med det samme
         game.attachInput(scene);
     }
 

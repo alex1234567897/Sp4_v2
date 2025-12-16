@@ -58,7 +58,7 @@ public class GameOverMenu implements Menu {
             }
             if (keys.contains(KeyCode.ESCAPE)) {
                 finishedExit = true;
-                MainMenu.showHighscoreMenu();
+
             }
         }
     }
