@@ -78,6 +78,7 @@ public class Invader {
         if (!alive || dying) return;
         dying = true;
         dyingTimer = DYING_TIME;
+        SoundManager.play(SoundManager.PLAYER_DIE);
     }
 
     public int getPoints() {

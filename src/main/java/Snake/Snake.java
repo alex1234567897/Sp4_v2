@@ -102,10 +102,10 @@ public class Snake extends Application {
         gameFrame.fillText("Press any key to start", 70, 300);
 
         scene.setOnKeyPressed(event -> {
-           // if (event.getCode() == KeyCode.SPACE)
-                newFood();
-                animationTimer();
-                snakeSetup();
+            // if (event.getCode() == KeyCode.SPACE)
+            newFood();
+            animationTimer();
+            snakeSetup();
 
 
         });

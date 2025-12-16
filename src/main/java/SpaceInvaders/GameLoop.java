@@ -1,5 +1,6 @@
 package SpaceInvaders;
 
+import java.util.function.IntConsumer;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,6 +13,10 @@ import javafx.scene.layout.StackPane;
 import java.util.*;
 
 public class GameLoop {
+
+    private final IntConsumer onExitToOuterMenu;
+
+    private final StackPane root;
 
     private GameState state = GameState.MENU;
     private Menu currentMenu;
@@ -30,10 +35,13 @@ public class GameLoop {
 
     private int score = 0;
 
+    public int getScore() {
+        return score;
+    }
+
     private final WritableImage framebuffer;
     private final PixelWriter pixelW;
     private final ImageView view;
-    private final StackPane root;
 
     private final Set<KeyCode> keys = new HashSet<>();
 
@@ -58,10 +66,11 @@ public class GameLoop {
 
     private AnimationTimer loop;
 
-    public GameLoop(int w, int h, int scale) {
+    public GameLoop(int w, int h, int scale, IntConsumer onExitToOuterMenu) {
         this.w = w;
         this.h = h;
         this.scale = scale;
+        this.onExitToOuterMenu = onExitToOuterMenu;
 
         framebuffer = new WritableImage(w, h);
         pixelW = framebuffer.getPixelWriter();
@@ -75,12 +84,17 @@ public class GameLoop {
 
         view = new ImageView(framebuffer);
         view.setSmooth(false);
+
         view.setFitWidth(w * scale);
         view.setFitHeight(h * scale);
+        view.setPreserveRatio(false);
 
         root = new StackPane(view);
 
+        view.setManaged(false);
+
         root.setFocusTraversable(true);
+
         view.setFocusTraversable(true);
 
         int playerX = (w - Assets.PLAYER.getWidth()) / 2;
@@ -153,11 +167,28 @@ public class GameLoop {
 
             if (freezeTimer <= 0) {
                 if (lives > 0) {
+                    SoundManager.play(SoundManager.PLAYER_DIE);
+
                     respawnPlayer();
                 } else {
-                    // game over state senere
+                    state = GameState.GAME_OVER;
+
+                    currentMenu = new GameOverMenu(pixelW, renderer, font, w, h, score, () -> {
+                                startNewGame();
+                                state = GameState.PLAYING;
+                                keys.clear();
+                            },
+                            finalScore -> {
+                                onExitToOuterMenu.accept(finalScore);
+                            }
+                    );
                 }
             }
+            if (state == GameState.GAME_OVER) {
+                currentMenu.update(dt, keys);
+                return;
+            }
+
             return;
         }
 
@@ -167,6 +198,16 @@ public class GameLoop {
             if (currentMenu.isFinished()) {
                 startNewGame();
                 state = GameState.PLAYING;
+            }
+            return;
+        }
+
+        if (state == GameState.GAME_OVER) {
+            currentMenu.update(dt, keys);
+
+            if (currentMenu.isFinished()) {
+                GameOverMenu gom = (GameOverMenu) currentMenu;
+                gom.runAction();
             }
             return;
         }
@@ -192,6 +233,8 @@ public class GameLoop {
             int by = player.getGunY() - 6;
             playerBullet = new Bullet(bx, by, -180, Assets.PLAYER_BULLET);
             shootCooldown = 0.25;
+            SoundManager.play(SoundManager.PLAYER_SHOOT);
+
         }
 
         if (playerBullet != null && playerBullet.isAlive()) {
@@ -287,6 +330,20 @@ public class GameLoop {
                     player.die();
                     freezeTimer = FREEZE_TIME;
 
+                    if (freezeTimer > 0) {
+                        freezeTimer -= dt;
+                        player.updateDeath(dt);
+
+                        if (freezeTimer <= 0) {
+                            if (lives > 0) {
+                                respawnPlayer();
+                            } else {
+                                goToGameOver();
+                            }
+                        }
+                        return;
+                    }
+
                     if (playerBullet != null) playerBullet.kill();
                     invaderBullets.clear();
 
@@ -303,7 +360,24 @@ public class GameLoop {
     private void render() {
         clear(OFF);
 
-        if (state == GameState.MENU) {
+        if (state == GameState.MENU || state == GameState.GAME_OVER) {
+            currentMenu.render();
+            return;
+        }
+
+        if (state == GameState.GAME_OVER) {
+            font.draw(pixelW, "SCORE<1>", Layout.SCORE_LABEL_X, Layout.SCORE_LABEL_Y, ON, w, h);
+            font.draw(pixelW, String.format("%04d", score), Layout.SCORE_NUMBER_X, Layout.SCORE_NUMBER_Y, ON, w, h);
+
+            for (Barrier b : barriers) b.render(renderer);
+            formation.render(renderer);
+            ufo.render(renderer, font, pixelW, ON, w, h);
+            player.render(renderer);
+            if (playerBullet != null && playerBullet.isAlive()) playerBullet.render(renderer);
+            for (Bullet b : invaderBullets) b.render(renderer);
+            if (ground != null) ground.render(renderer);
+            drawLives();
+
             currentMenu.render();
             return;
         }
@@ -352,7 +426,8 @@ public class GameLoop {
 
         int numberX = Layout.LIVES_NUMBER_X_FROM_LEFT;
         int numberY = lineY + Layout.LIVES_NUMBER_Y_OFFSET_UNDER_LINE;
-        font.draw(pixelW, String.valueOf(lives), numberX, numberY, ON, w, h);
+        font.draw(pixelW, String.valueOf(lives), numberX, numberY,
+                renderer.palette().inkAtY(numberY, Colors.ON), w, h);
 
         int iconsX = numberX + Layout.GAP_NUMBER_TO_LIFE_ICON + 5;
         int iconY  = numberY;
@@ -361,7 +436,7 @@ public class GameLoop {
         int step = Assets.PLAYER.getWidth() + Layout.GAP_BETWEEN_LIFE_ICONS;
 
         for (int i = 0; i < icons; i++) {
-            drawSprite(Assets.PLAYER, iconsX + i * step, iconY, ON);
+            renderer.sprite(Assets.PLAYER, iconsX + i * step, iconY);
         }
     }
 
@@ -438,5 +513,26 @@ public class GameLoop {
 
         int ufoY = Layout.ufoY(Assets.UFO.getHeight());
         ufo = new Ufo(ufoY);
+    }
+
+
+    private void goToGameOver() {
+        state = GameState.GAME_OVER;
+
+        if (playerBullet != null) playerBullet.kill();
+        invaderBullets.clear();
+
+        currentMenu = new GameOverMenu(
+                pixelW, renderer, font, w, h,
+                score,
+                () -> {
+                    startNewGame();
+                    state = GameState.PLAYING;
+                    keys.clear();
+                },
+                onExitToOuterMenu
+        );
+
+        keys.clear();
     }
 }

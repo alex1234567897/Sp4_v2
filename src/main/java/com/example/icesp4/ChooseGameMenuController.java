@@ -1,5 +1,7 @@
 package com.example.icesp4;
 
+
+import Snake.Snake;
 import javafx.fxml.FXML;
 import javafx.scene.media.AudioClip;
 
@@ -11,7 +13,13 @@ public class ChooseGameMenuController {
     }
 
     @FXML
-    protected void placeHolder(){
+    protected void SpaceInvaders(){
+        MainMenu.showChooseGameSubMenu();
+
+    }
+    @FXML
+    protected void playSnake(){
+        MainMenu.showSnake();
 
     }
 

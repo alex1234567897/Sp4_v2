@@ -19,8 +19,8 @@ public final class Layout {
 
 
     // SCORE HUD
-    public static final int SCORE_LABEL_X = 8;    // SCORE<1>
-    public static final int SCORE_NUMBER_X = 24;  // 0000
+    public static final int SCORE_LABEL_X = 8;
+    public static final int SCORE_NUMBER_X = 24;
 
     public static final int SCORE_LABEL_Y = 12;
     public static final int SCORE_NUMBER_Y = SCORE_LABEL_Y + 7 + 8;
@@ -28,7 +28,7 @@ public final class Layout {
     // Ground line + lives area
     public static final int GROUND_FROM_BOTTOM = 17;
     public static final int LIVES_NUMBER_X_FROM_LEFT = 9;
-    public static final int LIVES_NUMBER_Y_OFFSET_UNDER_LINE = 1; // "lige under linjen"
+    public static final int LIVES_NUMBER_Y_OFFSET_UNDER_LINE = 1;
 
     public static final int GAP_NUMBER_TO_LIFE_ICON = 9;
     public static final int GAP_BETWEEN_LIFE_ICONS = 1;
