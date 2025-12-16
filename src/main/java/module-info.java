@@ -24,6 +24,9 @@ module com.example.icesp4 {
     exports com.example.icesp4;
     exports com.example.icesp4.db;
 
+    exports Snake;
+    opens Snake to javafx.fxml, javafx.graphics;
+
     exports SpaceInvaders;
     opens SpaceInvaders to javafx.fxml, javafx.graphics;
 

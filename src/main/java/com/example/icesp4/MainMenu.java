@@ -1,10 +1,9 @@
 package com.example.icesp4;
 
+
+import Snake.SnakeGame;
 import com.example.icesp4.core.Services;
-
 import javafx.application.Application;
-
-import javafx.concurrent.Service;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -142,4 +141,14 @@ public class MainMenu extends Application {
         game.requestFocus();
         game.start();
     }
+    public static void showSnake() {
+        SnakeGame game = new SnakeGame(600, 600);
+
+        Scene scene = new Scene(game.getRoot());
+        primaryStage.setScene(scene);
+
+        game.attachInput(scene);
+    }
+
+
 }
