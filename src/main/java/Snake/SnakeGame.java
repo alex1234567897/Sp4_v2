@@ -114,6 +114,7 @@ public class SnakeGame {
         gc.setFont(new Font(40));
         gc.fillText("Press any key to start", 60, height / 2);
 
+        root.requestFocus();
         root.setOnKeyPressed(e -> {
             root.setOnKeyPressed(null);
             initGame();

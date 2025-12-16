@@ -23,6 +23,7 @@ public class MainApp extends Application {
 
         game.start();
         game.attachInput(scene);
+
         }
 
         public static void main(String[] args) {

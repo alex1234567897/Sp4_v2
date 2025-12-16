@@ -82,7 +82,7 @@ public class MainMenu extends Application {
         stage.setTitle("ARCADE MACHINE");
         stage.getIcons().add(image);
         stage.setScene(mainMenuScene);
-        stage.setResizable(false);
+        stage.setResizable(true);
         stage.setWidth(width);
         stage.setHeight(height);
         stage.show();
@@ -143,10 +143,13 @@ public class MainMenu extends Application {
     }
     public static void showSnake() {
         SnakeGame game = new SnakeGame(600, 600);
-
         Scene scene = new Scene(game.getRoot());
-        primaryStage.setScene(scene);
 
+        primaryStage.setScene(scene);
+        primaryStage.setResizable(true);
+        primaryStage.show();
+
+// bind input og start spillet med det samme
         game.attachInput(scene);
     }
 
