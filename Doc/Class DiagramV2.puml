@@ -95,6 +95,9 @@ package net {
 }
 
 package Snake {
+ class Snake
+ class Corner
+ Enum Dir
     ' Ingen klasser vist i screenshot, men placeholder hvis nødvendigt
 }
 

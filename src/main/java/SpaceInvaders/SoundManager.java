@@ -6,7 +6,6 @@ public class SoundManager {
 
     public static AudioClip PLAYER_SHOOT;
     public static AudioClip PLAYER_DIE;
-    public static AudioClip INVADER_DIE;
     public static AudioClip INVADER_SHOOT;
 
     static {
